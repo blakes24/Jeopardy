@@ -206,7 +206,8 @@ $(function() {
 	$('.game').on('click', 'tbody > tr > td', handleClick);
 });
 
-// shuffle function based on Fisher Yates algorithm
+// shuffle function based on Fisher Yates algorithm from https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
+
 function shuffle(array) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * i);
