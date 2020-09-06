@@ -144,9 +144,9 @@ tbody {
 	}
 }
 
-@media all and (max-width: 688px) {
+@media all and (max-width: 576px) {
 	.game {
-		padding: 0px;
+		padding: 10px 0px;
 	}
 	tbody {
 		font-size: 20px;
