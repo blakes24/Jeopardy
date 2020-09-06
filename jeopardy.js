@@ -26,7 +26,7 @@ let categories = [];
 
 async function getCategoryIds() {
 	let ids = [];
-	const results = await axios.get('http://jservice.io/api/categories/?count=100');
+	const results = await axios.get('https://jservice.io/api/categories/?count=100');
 
 	while (ids.length < 6) {
 		let random = Math.floor(Math.random() * 100);
@@ -50,7 +50,7 @@ async function getCategoryIds() {
  */
 
 async function getCategory(catId) {
-	const category = await axios.get(`http://jservice.io/api/category?id=${catId}`);
+	const category = await axios.get(`https://jservice.io/api/category?id=${catId}`);
 	let clueArr = [];
 
 	for (let clue of category.data.clues) {
