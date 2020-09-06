@@ -28,7 +28,7 @@ button {
 	padding: 5px 10px;
 	border-radius: 5px;
 	margin: 10px;
-	font-size: 14px;
+	font-size: 1em;
 	box-shadow: 4px 4px 5px 1px #a7a7a7;
 	font-family: 'Copse';
 }
@@ -57,9 +57,13 @@ td {
 	text-shadow: 2px 2px 2px #000000;
 }
 
+tbody td:hover {
+	background: #8d2ab5;
+}
+
 tbody {
 	color: rgb(253, 237, 8);
-	font-size: 25px;
+	font-size: 30px;
 }
 
 /* Single Element CSS Spinner from https://projects.lukehaas.me/css-loaders/ */
@@ -125,5 +129,24 @@ tbody {
 	100% {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
+	}
+}
+
+@media all and (max-width: 480px) {
+	.game {
+		padding: 0px;
+	}
+	tbody {
+		font-size: 20px;
+	}
+	thead {
+		font-size: 8px;
+	}
+	h1 {
+		font-size: 2rem;
+	}
+	button {
+		font-size: .5em;
+		margin-bottom: 20px;
 	}
 }

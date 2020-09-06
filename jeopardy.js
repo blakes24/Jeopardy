@@ -151,7 +151,7 @@ function handleClick(evt) {
 	if (showing === null) {
 		evt.target.innerHTML = question;
 		categories[cat].clues[clue].showing = 'question';
-		$(this).css({ color: 'white', fontSize: '.6em' });
+		$(this).css({ color: 'white', fontSize: '.5em' });
 	} else if (showing === 'question') {
 		evt.target.innerHTML = answer;
 		categories[cat].clues[clue].showing = 'answer';
