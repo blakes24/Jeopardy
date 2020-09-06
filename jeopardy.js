@@ -26,7 +26,8 @@ let categories = [];
 
 async function getCategoryIds() {
 	let ids = [];
-	const results = await axios.get('https://jservice.io/api/categories/?count=100');
+	let offset = Math.floor(Math.random() * 183) * 100;
+	const results = await axios.get(`https://jservice.io/api/categories/?count=100&offset=${offset}`);
 
 	while (ids.length < 6) {
 		let random = Math.floor(Math.random() * 100);

@@ -53,7 +53,7 @@ thead {
 
 td {
 	border: 1px solid white;
-	padding: 0.5rem;
+	padding: 0.5rem 0.1rem;
 	text-shadow: 2px 2px 2px #000000;
 }
 
@@ -132,7 +132,19 @@ tbody {
 	}
 }
 
-@media all and (max-width: 480px) {
+@media only screen and (max-width: 992px) {
+	.game {
+		padding: 20px 5px;
+	}
+	thead {
+		font-size: 12px;
+	}
+	tbody {
+		font-size: 25px;
+	}
+}
+
+@media all and (max-width: 688px) {
 	.game {
 		padding: 0px;
 	}
@@ -140,7 +152,7 @@ tbody {
 		font-size: 20px;
 	}
 	thead {
-		font-size: 8px;
+		font-size: 7px;
 	}
 	h1 {
 		font-size: 2rem;
