@@ -1,4 +1,4 @@
-//  this is the main data structure for the app; it looks like this:
+//  categories is the main data structure for the app; it looks like this:
 //  [
 //    { title: "Math",
 //      clues: [
@@ -74,61 +74,64 @@ async function getCategory(catId) {
  *   (initally, just show a "?" where the question/answer would go.)
  */
 
-async function fillTable() {
+function fillTable() {
 	const table = $(`<table>
 	<thead>
 		  <tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td>${categories[0].title}</td>
+				<td>${categories[1].title}</td>
+				<td>${categories[2].title}</td>
+				<td>${categories[3].title}</td>
+				<td>${categories[4].title}</td>
+				<td>${categories[5].title}</td>
 		  </tr>
 	</thead>
-	<tbody>
+	<tbody>		
 		  <tr>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
+				<td data-category=0 data-clue=0 >?</td>
+				<td data-category=1 data-clue=0 >?</td>
+				<td data-category=2 data-clue=0 >?</td>
+				<td data-category=3 data-clue=0 >?</td>
+				<td data-category=4 data-clue=0 >?</td>
+				<td data-category=5 data-clue=0 >?</td>
 		  </tr>
 		  <tr>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
+				<td data-category=0 data-clue=1 >?</td>
+				<td data-category=1 data-clue=1 >?</td>
+				<td data-category=2 data-clue=1 >?</td>
+				<td data-category=3 data-clue=1 >?</td>
+				<td data-category=4 data-clue=1 >?</td>
+				<td data-category=5 data-clue=1 >?</td>
 		  </tr>
 		  <tr>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
+				<td data-category=0 data-clue=2 >?</td>
+				<td data-category=1 data-clue=2 >?</td>
+				<td data-category=2 data-clue=2 >?</td>
+				<td data-category=3 data-clue=2 >?</td>
+				<td data-category=4 data-clue=2 >?</td>
+				<td data-category=5 data-clue=2 >?</td>
 		  </tr>
 		  <tr>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
+				<td data-category=0 data-clue=3 >?</td>
+				<td data-category=1 data-clue=3 >?</td>
+				<td data-category=2 data-clue=3 >?</td>
+				<td data-category=3 data-clue=3 >?</td>
+				<td data-category=4 data-clue=3 >?</td>
+				<td data-category=5 data-clue=3 >?</td>
 		  </tr>
 		  <tr>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
-				<td>?</td>
+				<td data-category=0 data-clue=4 >?</td>
+				<td data-category=1 data-clue=4 >?</td>
+				<td data-category=2 data-clue=4 >?</td>
+				<td data-category=3 data-clue=4 >?</td>
+				<td data-category=4 data-clue=4 >?</td>
+				<td data-category=5 data-clue=4 >?</td>
 		  </tr>
+		  
 	</tbody>
 </table>`);
+
+	$('.game').append(table);
 }
 
 /** Handle clicking on a clue: show the question or answer.
@@ -139,17 +142,42 @@ async function fillTable() {
  * - if currently "answer", ignore click
  * */
 
-function handleClick(evt) {}
+function handleClick(evt) {
+	const clue = +evt.target.dataset.clue;
+	const cat = +evt.target.dataset.category;
+	const question = categories[cat].clues[clue].question;
+	const answer = categories[cat].clues[clue].answer;
+	const showing = categories[cat].clues[clue].showing;
+	if (showing === null) {
+		evt.target.innerHTML = question;
+		categories[cat].clues[clue].showing = 'question';
+		$(this).css({ color: 'white', fontSize: '.6em' });
+	} else if (showing === 'question') {
+		evt.target.innerHTML = answer;
+		categories[cat].clues[clue].showing = 'answer';
+		$(this).css({ backgroundColor: '#28a200' });
+	} else {
+		return;
+	}
+}
 
 /** Wipe the current Jeopardy board, show the loading spinner,
  * and update the button used to fetch data.
  */
 
-function showLoadingView() {}
+function showLoadingView() {
+	$('button').text('LOADING...');
+	$('.game').empty();
+	categories = [];
+	$('.loader').css('visibility', 'visible');
+}
 
 /** Remove the loading spinner and update the button used to fetch data. */
 
-function hideLoadingView() {}
+function hideLoadingView() {
+	$('.loader').css('visibility', 'hidden');
+	$('button').text('RESTART');
+}
 
 /** Start game:
  *
@@ -159,16 +187,24 @@ function hideLoadingView() {}
  * */
 
 async function setupAndStart() {
+	showLoadingView();
 	let catIds = await getCategoryIds();
+	for (let catId of catIds) {
+		categories.push(await getCategory(catId));
+	}
+	fillTable();
+	hideLoadingView();
 }
 
 /** On click of start / restart button, set up game. */
 
-// TODO
+$('button').on('click', setupAndStart);
 
 /** On page load, add event handler for clicking clues */
 
-// TODO
+$(function() {
+	$('.game').on('click', 'tbody > tr > td', handleClick);
+});
 
 // shuffle function based on Fisher Yates algorithm
 function shuffle(array) {
